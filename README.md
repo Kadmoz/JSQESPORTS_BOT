@@ -358,7 +358,7 @@ Bot desarrollado para JSQESPORTS por JSQ_KADMOZ.
 Desarrollado con discord.py y alojado en Replit.
 
 **Versión:** 2.0  
-**Última actualización:** Enero 2026
+**Última actualización:** 02/01/2026
 
 ---
 
