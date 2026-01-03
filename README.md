@@ -354,11 +354,11 @@ Si encuentras algún problema o tienes sugerencias:
 
 ## 📜 Licencia y Créditos
 
-Bot desarrollado para equipos de simracing F1 25.
+Bot desarrollado para JSQESPORTS por JSQ_KADMOZ.
 Desarrollado con discord.py y alojado en Replit.
 
 **Versión:** 2.0  
-**Última actualización:** Enero 2025
+**Última actualización:** Enero 2026
 
 ---
 
