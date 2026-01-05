@@ -34,7 +34,11 @@ CAMPOS_DISPONIBLES = [
 def cargar_datos():
     if os.path.exists(DATA_FILE):
         with open(DATA_FILE, 'r', encoding='utf-8') as f:
-            return json.load(f)
+            datos_cargados = json.load(f)
+            # Asegurar que existan las nuevas claves
+            if 'cumpleaños' not in datos_cargados:
+                datos_cargados['cumpleaños'] = []
+            return datos_cargados
     else:
         return {
             'torneos': [
@@ -51,7 +55,8 @@ def cargar_datos():
                 {'nombre': 'MRS División 1', 'dia': 'Jueves', 'activo_desde': 'marzo'},
                 {'nombre': 'Liga Prime Time', 'dia': 'Viernes'}
             ],
-            'canal_recordatorios': None
+            'canal_recordatorios': None,
+            'cumpleaños': []
         }
 
 def guardar_datos(datos):
@@ -64,6 +69,7 @@ datos = cargar_datos()
 async def on_ready():
     print(f'{bot.user} está conectado!')
     recordatorio_carreras.start()
+    verificar_cumpleaños.start()
 
 # ===== COMANDOS DE CONSULTA =====
 
@@ -375,6 +381,59 @@ async def canal_recordatorios(ctx):
     guardar_datos(datos)
     await ctx.send(f"✅ Este canal recibirá recordatorios automáticos de carreras")
 
+@bot.command(name='cumples')
+async def cumples(ctx):
+    """Muestra la lista de cumpleaños"""
+    if not datos.get('cumpleaños'):
+        await ctx.send("🎂 No hay cumpleaños registrados.")
+        return
+    
+    embed = discord.Embed(
+        title="🎂 Cumpleaños del Equipo",
+        color=discord.Color.fuchsia()
+    )
+    
+    # Ordenar por mes y día
+    lista_ordenada = sorted(datos['cumpleaños'], key=lambda x: (int(x['fecha'].split('/')[1]), int(x['fecha'].split('/')[0])))
+    
+    texto = ""
+    for c in lista_ordenada:
+        texto += f"**{c['nombre']}** - {c['fecha']}\n"
+    
+    embed.description = texto
+    await ctx.send(embed=embed)
+
+@bot.command(name='añadir_cumple')
+@commands.has_permissions(administrator=True)
+async def añadir_cumple(ctx, *, args):
+    """Añade un cumpleaños. Uso: !añadir_cumple Nombre | DD/MM"""
+    try:
+        nombre, fecha = [x.strip() for x in args.split('|')]
+        # Validar formato fecha
+        datetime.strptime(fecha, '%d/%m')
+        
+        # Eliminar si ya existe para actualizar
+        datos['cumpleaños'] = [c for c in datos['cumpleaños'] if c['nombre'].lower() != nombre.lower()]
+        
+        datos['cumpleaños'].append({'nombre': nombre, 'fecha': fecha})
+        guardar_datos(datos)
+        await ctx.send(f"✅ Cumpleaños de **{nombre}** ({fecha}) guardado.")
+    except:
+        await ctx.send("❌ Formato incorrecto. Usa: `!añadir_cumple Nombre | DD/MM`")
+
+@bot.command(name='eliminar_cumple')
+@commands.has_permissions(administrator=True)
+async def eliminar_cumple(ctx, *, nombre):
+    """Elimina un cumpleaños"""
+    original_len = len(datos['cumpleaños'])
+    datos['cumpleaños'] = [c for c in datos['cumpleaños'] if c['nombre'].lower() != nombre.lower()]
+    
+    if len(datos['cumpleaños']) < original_len:
+        guardar_datos(datos)
+        await ctx.send(f"✅ Cumpleaños de **{nombre}** eliminado.")
+    else:
+        await ctx.send(f"❌ No se encontró a **{nombre}**.")
+
 # ===== SISTEMA DE RECORDATORIOS =====
 
 @tasks.loop(minutes=30)
@@ -417,6 +476,29 @@ async def recordatorio_carreras():
         except:
             continue
 
+@tasks.loop(hours=24)
+async def verificar_cumpleaños():
+    """Verifica si hoy es el cumpleaños de alguien"""
+    if not datos.get('canal_recordatorios'):
+        return
+    
+    canal = bot.get_channel(datos['canal_recordatorios'])
+    if not canal:
+        return
+    
+    hoy_str = datetime.now().strftime('%d/%m')
+    cumpleañeros = [c['nombre'] for c in datos['cumpleaños'] if c['fecha'] == hoy_str]
+    
+    if cumpleañeros:
+        nombres = " y ".join(cumpleañeros)
+        embed = discord.Embed(
+            title="🎂 ¡FELIZ CUMPLEAÑOS!",
+            description=f"Hoy celebramos el cumpleaños de: **{nombres}** 🎉",
+            color=discord.Color.random()
+        )
+        embed.set_thumbnail(url="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJndnZndnZndnZndnZndnZndnZndnZndnZndnZndnZndnZndmcmImZXA9djFfaW50ZXJuYWxfZ2lmX2J5X2lkJmN0PWc/3o7TKSjP9pL6W1XUf6/giphy.gif")
+        await canal.send(content="@everyone" if len(cumpleañeros) > 0 else "", embed=embed)
+
 @bot.command(name='ayuda_bot')
 async def ayuda_bot(ctx):
     """Muestra todos los comandos disponibles"""
@@ -434,6 +516,7 @@ async def ayuda_bot(ctx):
         `!proxima` o `!pc` - Ver próxima carrera
         `!info Nombre Torneo` - Info detallada de un torneo
         `!campos` - Ver campos configurables
+        `!cumples` - Ver lista de cumpleaños
         """,
         inline=False
     )
@@ -445,6 +528,8 @@ async def ayuda_bot(ctx):
         `!nuevo_torneo Lunes Nombre del Torneo`
         `!eliminar_torneo Nombre del Torneo`
         `!canal_recordatorios` - Activar recordatorios en este canal
+        `!añadir_cumple Nombre | DD/MM` - Añadir cumpleaños
+        `!eliminar_cumple Nombre` - Eliminar cumpleaños
         """,
         inline=False
     )
