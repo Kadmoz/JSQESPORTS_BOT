@@ -8,6 +8,7 @@ Bot para manejo de ligas de JSQ ESPORTS en discord
 - [Características](#-características)
 - [Comandos para Usuarios](#-comandos-para-usuarios)
 - [Comandos para Administradores](#️-comandos-para-administradores)
+- [Cumpleaños](#-cumpleaños)
 - [Campos Configurables](#-campos-configurables)
 - [Ejemplos de Uso](#-ejemplos-de-uso)
 - [Preguntas Frecuentes](#-preguntas-frecuentes)
@@ -18,6 +19,7 @@ Bot para manejo de ligas de JSQ ESPORTS en discord
 
 - 📅 **Calendario semanal** de todas las ligas y torneos
 - ⏰ **Recordatorios automáticos** 1 hora antes de cada carrera
+- 🎂 **Recordatorios de cumpleaños** automáticos para el equipo
 - 📺 **Enlaces directos** a streams de cada liga
 - 📞 **Información de contacto** completa (teléfono, Instagram, Twitter, Discord)
 - 🎮 **Detalles técnicos** (plataforma, tipo de competencia)
@@ -115,6 +117,16 @@ Muestra un resumen de todos los comandos disponibles.
 
 ---
 
+### `!cumples`
+Muestra la lista completa de los próximos cumpleaños registrados en el equipo.
+
+**Ejemplo:**
+```
+!cumples
+```
+
+---
+
 ## ⚙️ Comandos para Administradores
 
 Estos comandos solo pueden ser usados por miembros con **permisos de administrador** en el servidor:
@@ -206,7 +218,7 @@ Elimina un campo específico de una liga (por ejemplo, si quieres borrar el tel�
 ---
 
 ### `!canal_recordatorios`
-Configura el canal actual para recibir notificaciones automáticas 1 hora antes de cada carrera.
+Configura el canal actual para recibir notificaciones automáticas 1 hora antes de cada carrera y mensajes de cumpleaños a las 00:00.
 
 **Uso:**
 1. Ve al canal donde quieres recibir las notificaciones
@@ -218,7 +230,28 @@ Configura el canal actual para recibir notificaciones automáticas 1 hora antes 
 **Resultado:**
 - El bot enviará recordatorios automáticos en ese canal
 - Los recordatorios se envían 1 hora antes de cada carrera con horario configurado
+- Los mensajes de feliz cumpleaños se envían automáticamente al inicio del día
 - Solo puede haber un canal de recordatorios activo a la vez
+
+---
+
+## 🎂 Cumpleaños
+
+### `!añadir_cumple <Nombre> | <DD/MM>`
+Añade un cumpleaños a la lista. (Solo Administradores)
+
+**Ejemplo:**
+```
+!añadir_cumple Kadmoz | 27/11
+```
+
+### `!eliminar_cumple <Nombre>`
+Elimina un cumpleaños de la lista. (Solo Administradores)
+
+**Ejemplo:**
+```
+!eliminar_cumple Kadmoz
+```
 
 ---
 
