@@ -3,8 +3,10 @@ from discord.ext import commands, tasks
 from datetime import datetime, timedelta
 import json
 import os
+import pytz
 
 # Configuración del bot
+CHILE_TZ = pytz.timezone('America/Santiago')
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='!', intents=intents)
@@ -111,7 +113,7 @@ async def calendario(ctx):
 @bot.command(name='hoy')
 async def hoy(ctx):
     """Muestra las carreras de hoy"""
-    dia_actual = DIAS[datetime.now().weekday()]
+    dia_actual = DIAS[datetime.now(CHILE_TZ).weekday()]
     torneos_hoy = [t for t in datos['torneos'] if t.get('dia') == dia_actual]
     
     if not torneos_hoy:
@@ -140,7 +142,7 @@ async def hoy(ctx):
 @bot.command(name='proxima', aliases=['pc'])
 async def proxima(ctx):
     """Muestra la próxima carrera"""
-    ahora = datetime.now()
+    ahora = datetime.now(CHILE_TZ)
     dia_actual = ahora.weekday()
     
     # Buscar próxima carrera
@@ -446,7 +448,7 @@ async def recordatorio_carreras():
     if not canal:
         return
     
-    ahora = datetime.now()
+    ahora = datetime.now(CHILE_TZ)
     dia_actual = DIAS[ahora.weekday()]
     hora_actual = ahora.time()
     
@@ -456,7 +458,11 @@ async def recordatorio_carreras():
     for t in torneos_hoy:
         try:
             hora_carrera = datetime.strptime(t['hora'], '%H:%M').time()
-            diff = datetime.combine(datetime.today(), hora_carrera) - datetime.combine(datetime.today(), hora_actual)
+            # Combinar con fecha actual en Chile para cálculo correcto
+            fecha_hoy_chile = ahora.date()
+            dt_carrera = CHILE_TZ.localize(datetime.combine(fecha_hoy_chile, hora_carrera))
+            
+            diff = dt_carrera - ahora
             minutos = diff.total_seconds() / 60
             
             # Recordatorio 60 minutos antes (con margen de 15 min)
@@ -486,7 +492,7 @@ async def verificar_cumpleaños():
     if not canal:
         return
     
-    hoy_str = datetime.now().strftime('%d/%m')
+    hoy_str = datetime.now(CHILE_TZ).strftime('%d/%m')
     cumpleañeros = [c['nombre'] for c in datos['cumpleaños'] if c['fecha'] == hoy_str]
     
     if cumpleañeros:
