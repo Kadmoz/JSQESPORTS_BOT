@@ -479,6 +479,23 @@ async def recordatorio_carreras():
                     embed.add_field(name="📺 Stream", value=t['stream'], inline=False)
                 
                 await canal.send(embed=embed)
+
+            # Alerta de Inicio de Carrera / Transmisión (entre -5 y 25 minutos de la hora fijada)
+            elif -5 <= minutos <= 25:
+                embed = discord.Embed(
+                    title="🏎️ ¡CARRERA INICIANDO!",
+                    description=f"La carrera **{t['nombre']}** está por comenzar o ya ha iniciado.",
+                    color=discord.Color.red()
+                )
+                embed.add_field(name="⏰ Hora Programada", value=t['hora'], inline=True)
+                
+                if t.get('stream'):
+                    embed.add_field(name="📺 Ver Transmisión", value=f"[Haz clic aquí para ver en vivo]({t['stream']})", inline=False)
+                
+                if t.get('admin'):
+                    embed.add_field(name="👤 Admin", value=t['admin'], inline=True)
+                
+                await canal.send(embed=embed)
         except:
             continue
 
