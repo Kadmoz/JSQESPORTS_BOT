@@ -40,6 +40,8 @@ def cargar_datos():
             # Asegurar que existan las nuevas claves
             if 'cumpleaños' not in datos_cargados:
                 datos_cargados['cumpleaños'] = []
+            if 'canal_cumpleaños' not in datos_cargados:
+                datos_cargados['canal_cumpleaños'] = None
             return datos_cargados
     else:
         return {
@@ -58,6 +60,7 @@ def cargar_datos():
                 {'nombre': 'Liga Prime Time', 'dia': 'Viernes'}
             ],
             'canal_recordatorios': None,
+            'canal_cumpleaños': None,
             'cumpleaños': []
         }
 
@@ -378,10 +381,55 @@ async def eliminar_torneo(ctx, *, nombre_torneo):
 @bot.command(name='canal_recordatorios')
 @commands.has_permissions(administrator=True)
 async def canal_recordatorios(ctx):
-    """Configura este canal para recibir recordatorios automáticos"""
+    """Configura este canal para recibir recordatorios automáticos de carreras"""
     datos['canal_recordatorios'] = ctx.channel.id
     guardar_datos(datos)
     await ctx.send(f"✅ Este canal recibirá recordatorios automáticos de carreras")
+
+@bot.command(name='canal_cumpleaños')
+@commands.has_permissions(administrator=True)
+async def canal_cumpleanos(ctx):
+    """Configura este canal para recibir notificaciones de cumpleaños"""
+    datos['canal_cumpleaños'] = ctx.channel.id
+    guardar_datos(datos)
+    await ctx.send(f"✅ Este canal recibirá notificaciones de cumpleaños 🎂")
+
+@bot.command(name='ver_canales')
+@commands.has_permissions(administrator=True)
+async def ver_canales(ctx):
+    """Muestra qué canales están configurados para notificaciones"""
+    embed = discord.Embed(
+        title="📺 Canales Configurados",
+        color=discord.Color.blue()
+    )
+    
+    # Canal de recordatorios de carreras
+    if datos.get('canal_recordatorios'):
+        canal_carreras = bot.get_channel(datos['canal_recordatorios'])
+        nombre_carreras = canal_carreras.mention if canal_carreras else "Canal no encontrado"
+    else:
+        nombre_carreras = "No configurado"
+    
+    embed.add_field(
+        name="🏎️ Recordatorios de Carreras",
+        value=nombre_carreras,
+        inline=False
+    )
+    
+    # Canal de cumpleaños
+    if datos.get('canal_cumpleaños'):
+        canal_cumples = bot.get_channel(datos['canal_cumpleaños'])
+        nombre_cumples = canal_cumples.mention if canal_cumples else "Canal no encontrado"
+    else:
+        nombre_cumples = "No configurado"
+    
+    embed.add_field(
+        name="🎂 Cumpleaños",
+        value=nombre_cumples,
+        inline=False
+    )
+    
+    await ctx.send(embed=embed)
 
 @bot.command(name='cumples')
 async def cumples(ctx):
@@ -502,10 +550,13 @@ async def recordatorio_carreras():
 @tasks.loop(hours=24)
 async def verificar_cumpleaños():
     """Verifica si hoy es el cumpleaños de alguien"""
-    if not datos.get('canal_recordatorios'):
+    # Usar el canal específico de cumpleaños si está configurado, sino usar el de recordatorios
+    canal_id = datos.get('canal_cumpleaños') or datos.get('canal_recordatorios')
+    
+    if not canal_id:
         return
     
-    canal = bot.get_channel(datos['canal_recordatorios'])
+    canal = bot.get_channel(canal_id)
     if not canal:
         return
     
@@ -550,7 +601,9 @@ async def ayuda_bot(ctx):
         `!actualizar Torneo | campo: valor`
         `!nuevo_torneo Lunes Nombre del Torneo`
         `!eliminar_torneo Nombre del Torneo`
-        `!canal_recordatorios` - Activar recordatorios en este canal
+        `!canal_recordatorios` - Activar recordatorios de carreras
+        `!canal_cumpleaños` - Activar notificaciones de cumpleaños
+        `!ver_canales` - Ver canales configurados
         `!añadir_cumple Nombre | DD/MM` - Añadir cumpleaños
         `!eliminar_cumple Nombre` - Eliminar cumpleaños
         """,
@@ -564,6 +617,8 @@ async def ayuda_bot(ctx):
 @nuevo_torneo.error
 @eliminar_torneo.error
 @canal_recordatorios.error
+@canal_cumpleanos.error
+@ver_canales.error
 async def permisos_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         await ctx.send("❌ Solo los administradores pueden usar este comando")
