@@ -3,3 +3,4 @@
 bot_error.log
 __pycache__/
 *.pyc
+.git-credentials
