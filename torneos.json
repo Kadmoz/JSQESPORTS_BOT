@@ -80,34 +80,122 @@
     {
       "nombre": "Liga Prime Time",
       "dia": "Viernes"
+    },
+    {
+      "nombre": "TSL Div 3",
+      "dia": "Lunes",
+      "hora": "21:30",
+      "admin": "Vecchi, Rafassi y Rob",
+      "organizador": "TSL",
+      "stream": "https://www.twitch.tv/topspeedleague",
+      "telefono": "+569XXXXXXXX",
+      "instagram": "@topspeedleague",
+      "plataforma": "PC, PS5, XBOX"
     }
   ],
   "canal_recordatorios": 1456838678319206482,
   "cumpleaños": [
-    { "nombre": "aist4r", "fecha": "10/10" },
-    { "nombre": "Kailex", "fecha": "25/03" },
-    { "nombre": "Nicohans", "fecha": "16/07" },
-    { "nombre": "Makiley", "fecha": "01/08" },
-    { "nombre": "Nicopro", "fecha": "11/01" },
-    { "nombre": "pAuL_kOrN", "fecha": "12/09" },
-    { "nombre": "Kadmoz", "fecha": "27/11" },
-    { "nombre": "Javier_sw4", "fecha": "29/05" },
-    { "nombre": "Marioh", "fecha": "29/07" },
-    { "nombre": "Jaavo", "fecha": "28/12" },
-    { "nombre": "Luciano_M12", "fecha": "17/06" },
-    { "nombre": "Norman", "fecha": "18/03" },
-    { "nombre": "Specter", "fecha": "15/03" },
-    { "nombre": "PatoPoblete", "fecha": "19/05" },
-    { "nombre": "Diego Ferrucho", "fecha": "15/03" },
-    { "nombre": "Mariano", "fecha": "13/08" },
-    { "nombre": "Caturro o ClaudioFelipe", "fecha": "03/01" },
-    { "nombre": "Justin (Fytx)", "fecha": "25/05" },
-    { "nombre": "Rafassi", "fecha": "27/06" },
-    { "nombre": "PepeSuarez", "fecha": "17/08" },
-    { "nombre": "Lucas-3d3n", "fecha": "30/06" },
-    { "nombre": "Valenmar46", "fecha": "02/12" },
-    { "nombre": "Phill (Upper Moon)", "fecha": "04/10" },
-    { "nombre": "Masfe", "fecha": "08/06" },
-    { "nombre": "Vecchi", "fecha": "06/03" }
-  ]
+    {
+      "nombre": "aist4r",
+      "fecha": "10/10"
+    },
+    {
+      "nombre": "Kailex",
+      "fecha": "25/03"
+    },
+    {
+      "nombre": "Nicohans",
+      "fecha": "16/07"
+    },
+    {
+      "nombre": "Makiley",
+      "fecha": "01/08"
+    },
+    {
+      "nombre": "Nicopro",
+      "fecha": "11/01"
+    },
+    {
+      "nombre": "pAuL_kOrN",
+      "fecha": "12/09"
+    },
+    {
+      "nombre": "Kadmoz",
+      "fecha": "27/11"
+    },
+    {
+      "nombre": "Javier_sw4",
+      "fecha": "29/05"
+    },
+    {
+      "nombre": "Marioh",
+      "fecha": "29/07"
+    },
+    {
+      "nombre": "Jaavo",
+      "fecha": "28/12"
+    },
+    {
+      "nombre": "Luciano_M12",
+      "fecha": "17/06"
+    },
+    {
+      "nombre": "Norman",
+      "fecha": "18/03"
+    },
+    {
+      "nombre": "Specter",
+      "fecha": "15/03"
+    },
+    {
+      "nombre": "PatoPoblete",
+      "fecha": "19/05"
+    },
+    {
+      "nombre": "Diego Ferrucho",
+      "fecha": "15/03"
+    },
+    {
+      "nombre": "Mariano",
+      "fecha": "13/08"
+    },
+    {
+      "nombre": "Caturro o ClaudioFelipe",
+      "fecha": "03/01"
+    },
+    {
+      "nombre": "Justin (Fytx)",
+      "fecha": "25/05"
+    },
+    {
+      "nombre": "Rafassi",
+      "fecha": "27/06"
+    },
+    {
+      "nombre": "PepeSuarez",
+      "fecha": "17/08"
+    },
+    {
+      "nombre": "Lucas-3d3n",
+      "fecha": "30/06"
+    },
+    {
+      "nombre": "Valenmar46",
+      "fecha": "02/12"
+    },
+    {
+      "nombre": "Phill (Upper Moon)",
+      "fecha": "04/10"
+    },
+    {
+      "nombre": "Masfe",
+      "fecha": "08/06"
+    },
+    {
+      "nombre": "Vecchi",
+      "fecha": "06/03"
+    }
+  ],
+  "canal_cumpleaños": 1253658144299683851,
+  "canal_comandos": 1456838678319206482
 }

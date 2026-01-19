@@ -579,6 +579,87 @@ async def cumples(ctx):
     embed.description = texto
     await ctx.send(embed=embed)
 
+@bot.command(name='proximo_cumple', aliases=['proximo_cumpleaños', 'pc_cumple'])
+async def proximo_cumple(ctx):
+    """Muestra el próximo cumpleaños"""
+    if not datos.get('cumpleaños'):
+        await ctx.send("🎂 No hay cumpleaños registrados.")
+        return
+    
+    hoy = datetime.now(CHILE_TZ)
+    
+    # Calcular días hasta cada cumpleaños
+    proximos = []
+    for c in datos['cumpleaños']:
+        dia, mes = map(int, c['fecha'].split('/'))
+        
+        # Crear fecha del cumpleaños este año
+        try:
+            cumple_este_año = datetime(hoy.year, mes, dia, tzinfo=CHILE_TZ)
+        except ValueError:
+            # Fecha inválida (ej: 29 feb en año no bisiesto)
+            continue
+        
+        # Si ya pasó este año, usar el próximo año
+        if cumple_este_año.date() < hoy.date():
+            try:
+                cumple_este_año = datetime(hoy.year + 1, mes, dia, tzinfo=CHILE_TZ)
+            except ValueError:
+                continue
+        
+        dias_faltantes = (cumple_este_año.date() - hoy.date()).days
+        proximos.append({
+            'nombre': c['nombre'],
+            'fecha': c['fecha'],
+            'dias': dias_faltantes,
+            'fecha_completa': cumple_este_año
+        })
+    
+    if not proximos:
+        await ctx.send("🎂 No hay cumpleaños próximos.")
+        return
+    
+    # Ordenar por días faltantes
+    proximos.sort(key=lambda x: x['dias'])
+    proximo = proximos[0]
+    
+    embed = discord.Embed(
+        title="🎂 Próximo Cumpleaños",
+        color=discord.Color.gold()
+    )
+    
+    embed.add_field(name="👤 Nombre", value=proximo['nombre'], inline=True)
+    embed.add_field(name="📅 Fecha", value=proximo['fecha'], inline=True)
+    
+    if proximo['dias'] == 0:
+        embed.add_field(name="⏰ Cuándo", value="¡Hoy! 🎉", inline=False)
+        embed.set_footer(text="¡Feliz cumpleaños! 🎊")
+    elif proximo['dias'] == 1:
+        embed.add_field(name="⏰ Cuándo", value="Mañana", inline=False)
+    else:
+        embed.add_field(name="⏰ Cuándo", value=f"En {proximo['dias']} días", inline=False)
+    
+    # Mostrar también los siguientes 2 cumpleaños si hay
+    if len(proximos) > 1:
+        siguientes = []
+        for p in proximos[1:3]:
+            if p['dias'] == 0:
+                cuando = "Hoy"
+            elif p['dias'] == 1:
+                cuando = "Mañana"
+            else:
+                cuando = f"En {p['dias']} días"
+            siguientes.append(f"**{p['nombre']}** ({p['fecha']}) - {cuando}")
+        
+        if siguientes:
+            embed.add_field(
+                name="📋 Siguientes cumpleaños",
+                value="\n".join(siguientes),
+                inline=False
+            )
+    
+    await ctx.send(embed=embed)
+
 @bot.command(name='añadir_cumple')
 @commands.has_permissions(administrator=True)
 async def añadir_cumple(ctx, *, args):
@@ -718,6 +799,7 @@ async def ayuda_bot(ctx):
         `!info Nombre Torneo` - Info detallada de un torneo
         `!campos` - Ver campos configurables
         `!cumples` - Ver lista de cumpleaños
+        `!proximo_cumple` o `!pc_cumple` - Ver próximo cumpleaños
         """,
         inline=False
     )
