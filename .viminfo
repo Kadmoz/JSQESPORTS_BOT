@@ -1,0 +1,158 @@
+# Vim 9.1 generó este archivo "viminfo".
+# Puede editarlo, ¡sólo si tiene cuidado!
+
+# Viminfo version
+|1,4
+
+# Valor de 'encoding' cuando se escribió este archivo
+*encoding=utf-8
+
+
+# hlsearch on (H) or off (h):
+~h
+# Historia de Línea de órdenes (de lo más nuevo a lo más antiguo):
+:x
+|2,0,1768862263,,"x"
+
+# Historia de Cadena de búsqueda (de lo más nuevo a lo más antiguo):
+
+# Historia de Expresión (de lo más nuevo a lo más antiguo):
+
+# Historia de Línea de entrada (de lo más nuevo a lo más antiguo):
+
+# Historia de Línea de depuración (de lo más nuevo a lo más antiguo):
+
+# Registros:
+""1	LINE	0
+	__pycache__/
+	*.py[cod]
+	*$py.class
+	*.so
+	.Python
+	build/
+	develop-eggs/
+	dist/
+	downloads/
+	eggs/
+	.eggs/
+	lib/
+	lib64/
+	parts/
+	sdist/
+	var/
+	wheels/
+	*.egg-info/
+	.installed.cfg
+	*.egg
+	.env
+	.venv
+	env/
+	venv/
+	ENV/
+	.pythonlibs/
+	torneos.json
+	.env
+	*.log
+|3,1,1,1,29,0,1768862255,"__pycache__/","*.py[cod]","*$py.class","*.so",".Python","build/","develop-eggs/","dist/","downloads/","eggs/",".eggs/","lib/","lib64/","parts/","sdist/","var/","wheels/","*.egg-info/",".installed.cfg","*.egg",".env",".venv","env/","venv/","ENV/",".pythonlibs/","torneos.json",".env","*.log"
+
+# Marcas en el archivo:
+'0  5  4  ~/.gitignore
+|4,48,5,4,1768862263,"~/.gitignore"
+'1  1  85  ~/.env
+|4,49,1,85,1768861073,"~/.env"
+'2  491  30  ~/README.md
+|4,50,491,30,1768860299,"~/README.md"
+'3  701  34  ~/bot.py
+|4,51,701,34,1768860256,"~/bot.py"
+
+# Lista de saltos (el más reciente va primero):
+-'  5  4  ~/.gitignore
+|4,39,5,4,1768862263,"~/.gitignore"
+-'  1  0  ~/.gitignore
+|4,39,1,0,1768862249,"~/.gitignore"
+-'  1  85  ~/.env
+|4,39,1,85,1768861073,"~/.env"
+-'  1  85  ~/.env
+|4,39,1,85,1768861073,"~/.env"
+-'  491  30  ~/README.md
+|4,39,491,30,1768860299,"~/README.md"
+-'  491  30  ~/README.md
+|4,39,491,30,1768860299,"~/README.md"
+-'  491  30  ~/README.md
+|4,39,491,30,1768860299,"~/README.md"
+-'  491  30  ~/README.md
+|4,39,491,30,1768860299,"~/README.md"
+-'  1  0  ~/README.md
+|4,39,1,0,1768860266,"~/README.md"
+-'  1  0  ~/README.md
+|4,39,1,0,1768860266,"~/README.md"
+-'  1  0  ~/README.md
+|4,39,1,0,1768860266,"~/README.md"
+-'  1  0  ~/README.md
+|4,39,1,0,1768860266,"~/README.md"
+-'  701  34  ~/bot.py
+|4,39,701,34,1768860256,"~/bot.py"
+-'  701  34  ~/bot.py
+|4,39,701,34,1768860256,"~/bot.py"
+-'  701  34  ~/bot.py
+|4,39,701,34,1768860256,"~/bot.py"
+-'  701  34  ~/bot.py
+|4,39,701,34,1768860256,"~/bot.py"
+-'  701  34  ~/bot.py
+|4,39,701,34,1768860256,"~/bot.py"
+-'  701  34  ~/bot.py
+|4,39,701,34,1768860256,"~/bot.py"
+-'  701  34  ~/bot.py
+|4,39,701,34,1768860256,"~/bot.py"
+-'  701  34  ~/bot.py
+|4,39,701,34,1768860256,"~/bot.py"
+-'  1  0  ~/bot.py
+|4,39,1,0,1768860246,"~/bot.py"
+-'  1  0  ~/bot.py
+|4,39,1,0,1768860246,"~/bot.py"
+-'  1  0  ~/bot.py
+|4,39,1,0,1768860246,"~/bot.py"
+-'  1  0  ~/bot.py
+|4,39,1,0,1768860246,"~/bot.py"
+-'  1  0  ~/bot.py
+|4,39,1,0,1768860246,"~/bot.py"
+-'  1  0  ~/bot.py
+|4,39,1,0,1768860246,"~/bot.py"
+-'  1  0  ~/bot.py
+|4,39,1,0,1768860246,"~/bot.py"
+-'  1  0  ~/bot.py
+|4,39,1,0,1768860246,"~/bot.py"
+
+# Historia de las marcas en los archivos (de la más reciente a la más antigua):
+
+> ~/.gitignore
+	*	1768862262	0
+	"	5	4
+	^	5	5
+	.	5	4
+	+	1	4
+	+	5	4
+
+> ~/.env
+	*	1768861072	0
+	"	1	85
+	^	1	86
+	.	1	85
+	+	1	85
+
+> ~/README.md
+	*	1768860298	0
+	"	491	30
+	^	491	31
+	.	491	30
+	+	1	24
+	+	495	46
+	+	491	30
+
+> ~/bot.py
+	*	1768860255	0
+	"	701	34
+	^	701	35
+	.	701	34
+	+	1	14
+	+	701	34

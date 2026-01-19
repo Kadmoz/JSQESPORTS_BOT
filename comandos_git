@@ -1,0 +1,21 @@
+# Para subir cambios después de editar:
+bot-push
+# Te pedirá descripción y subirá todo
+
+# Para bajar cambios de GitHub y reiniciar:
+bot-pull
+
+# Ver historial de cambios
+sudo -u discordbot git log --oneline
+
+# Ver diferencias antes de commit
+sudo -u discordbot git diff
+
+# Ver estado actual
+sudo -u discordbot git status
+
+# Deshacer cambios no guardados
+sudo -u discordbot git checkout -- bot.py
+
+# Ver último commit
+sudo -u discordbot git show

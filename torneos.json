@@ -1,0 +1,113 @@
+{
+  "torneos": [
+    {
+      "nombre": "Liga Canalla Prime",
+      "dia": "Lunes",
+      "hora": "22:00",
+      "admin": "Enzo Commendatore",
+      "instagram": "@ligacanalla",
+      "plataforma": "PC, PS5, XBOX"
+    },
+    {
+      "nombre": "EDR División F1 Nitro",
+      "dia": "Lunes",
+      "activo_desde": "marzo",
+      "hora": "22:00",
+      "admin": "Elfo",
+      "organizador": "EDR",
+      "stream": "https://www.twitch.tv/edriveracinglive",
+      "telefono": "+569XXXXXXXX",
+      "instagram": "@XXXXX",
+      "twitter": "@XXXXXX",
+      "discord_liga": "XXXXX",
+      "plataforma": "PC",
+      "tipo_competencia": "Campeonato",
+      "notas": "La  gano el Kadmoz por que es el mejor"
+    },
+    {
+      "nombre": "TSL División 2",
+      "dia": "Martes",
+      "admin": "Vecchi, Rafassi y Rob",
+      "hora": "21:30",
+      "instagram": "@topspeedleague",
+      "plataforma": "PC, PS5, XBOX",
+      "notas": "Vecchi se la come",
+      "stream": "https://www.twitch.tv/topspeedleague"
+    },
+    {
+      "nombre": "EDR Summer",
+      "dia": "Martes",
+      "activo_hasta": "febrero"
+    },
+    {
+      "nombre": "EDR División F1 Hyper",
+      "dia": "Martes",
+      "activo_desde": "marzo"
+    },
+    {
+      "nombre": "Liga Canalla Elite",
+      "dia": "Martes"
+    },
+    {
+      "nombre": "TSL División 1",
+      "dia": "Miércoles",
+      "hora": "21:30",
+      "admin": "Vecchi, Rafassi y Rob",
+      "instagram": "@topspeedleague",
+      "plataforma": "PC, PS5, XBOX",
+      "nota": "Vecchi se la vuelve a comer",
+      "stream": "https://www.twitch.tv/topspeedleague"
+    },
+    {
+      "nombre": "MRS Summer",
+      "dia": "Miércoles",
+      "activo_hasta": "febrero"
+    },
+    {
+      "nombre": "Liga del Pescador División Racing",
+      "dia": "Miércoles"
+    },
+    {
+      "nombre": "MRS Summer",
+      "dia": "Jueves",
+      "activo_hasta": "febrero"
+    },
+    {
+      "nombre": "MRS División 1",
+      "dia": "Jueves",
+      "activo_desde": "marzo"
+    },
+    {
+      "nombre": "Liga Prime Time",
+      "dia": "Viernes"
+    }
+  ],
+  "canal_recordatorios": 1456838678319206482,
+  "cumpleaños": [
+    { "nombre": "aist4r", "fecha": "10/10" },
+    { "nombre": "Kailex", "fecha": "25/03" },
+    { "nombre": "Nicohans", "fecha": "16/07" },
+    { "nombre": "Makiley", "fecha": "01/08" },
+    { "nombre": "Nicopro", "fecha": "11/01" },
+    { "nombre": "pAuL_kOrN", "fecha": "12/09" },
+    { "nombre": "Kadmoz", "fecha": "27/11" },
+    { "nombre": "Javier_sw4", "fecha": "29/05" },
+    { "nombre": "Marioh", "fecha": "29/07" },
+    { "nombre": "Jaavo", "fecha": "28/12" },
+    { "nombre": "Luciano_M12", "fecha": "17/06" },
+    { "nombre": "Norman", "fecha": "18/03" },
+    { "nombre": "Specter", "fecha": "15/03" },
+    { "nombre": "PatoPoblete", "fecha": "19/05" },
+    { "nombre": "Diego Ferrucho", "fecha": "15/03" },
+    { "nombre": "Mariano", "fecha": "13/08" },
+    { "nombre": "Caturro o ClaudioFelipe", "fecha": "03/01" },
+    { "nombre": "Justin (Fytx)", "fecha": "25/05" },
+    { "nombre": "Rafassi", "fecha": "27/06" },
+    { "nombre": "PepeSuarez", "fecha": "17/08" },
+    { "nombre": "Lucas-3d3n", "fecha": "30/06" },
+    { "nombre": "Valenmar46", "fecha": "02/12" },
+    { "nombre": "Phill (Upper Moon)", "fecha": "04/10" },
+    { "nombre": "Masfe", "fecha": "08/06" },
+    { "nombre": "Vecchi", "fecha": "06/03" }
+  ]
+}
