@@ -46,6 +46,8 @@ def cargar_datos():
                 datos_cargados['cumpleaños'] = []
             if 'canal_cumpleaños' not in datos_cargados:
                 datos_cargados['canal_cumpleaños'] = None
+            if 'canal_comandos' not in datos_cargados:
+                datos_cargados['canal_comandos'] = None
             return datos_cargados
     else:
         return {
@@ -65,6 +67,7 @@ def cargar_datos():
             ],
             'canal_recordatorios': None,
             'canal_cumpleaños': None,
+            'canal_comandos': None,
             'cumpleaños': []
         }
 
@@ -82,7 +85,18 @@ async def on_ready():
 
 # ===== COMANDOS DE CONSULTA =====
 
+def solo_canal_comandos():
+    """Decorador para restringir comandos al canal configurado"""
+    async def predicate(ctx):
+        # Si no hay canal configurado, permitir en cualquier lado
+        if not datos.get('canal_comandos'):
+            return True
+        # Si hay canal configurado, solo permitir ahí
+        return ctx.channel.id == datos.get('canal_comandos')
+    return commands.check(predicate)
+
 @bot.command(name='calendario', aliases=['cal'])
+@solo_canal_comandos()
 async def calendario(ctx):
     """Muestra el calendario completo de torneos"""
     embed = discord.Embed(
@@ -118,6 +132,7 @@ async def calendario(ctx):
     await ctx.send(embed=embed)
 
 @bot.command(name='hoy')
+@solo_canal_comandos()
 async def hoy(ctx):
     """Muestra las carreras de hoy"""
     dia_actual = DIAS[datetime.now(CHILE_TZ).weekday()]
@@ -147,36 +162,43 @@ async def hoy(ctx):
     await ctx.send(embed=embed)
 
 @bot.command(name='lunes')
+@solo_canal_comandos()
 async def lunes(ctx):
     """Muestra las carreras del lunes"""
     await mostrar_carreras_dia(ctx, 'Lunes')
 
 @bot.command(name='martes')
+@solo_canal_comandos()
 async def martes(ctx):
     """Muestra las carreras del martes"""
     await mostrar_carreras_dia(ctx, 'Martes')
 
 @bot.command(name='miercoles')
+@solo_canal_comandos()
 async def miercoles(ctx):
     """Muestra las carreras del miércoles"""
     await mostrar_carreras_dia(ctx, 'Miércoles')
 
 @bot.command(name='jueves')
+@solo_canal_comandos()
 async def jueves(ctx):
     """Muestra las carreras del jueves"""
     await mostrar_carreras_dia(ctx, 'Jueves')
 
 @bot.command(name='viernes')
+@solo_canal_comandos()
 async def viernes(ctx):
     """Muestra las carreras del viernes"""
     await mostrar_carreras_dia(ctx, 'Viernes')
 
 @bot.command(name='sabado')
+@solo_canal_comandos()
 async def sabado(ctx):
     """Muestra las carreras del sábado"""
     await mostrar_carreras_dia(ctx, 'Sábado')
 
 @bot.command(name='domingo')
+@solo_canal_comandos()
 async def domingo(ctx):
     """Muestra las carreras del domingo"""
     await mostrar_carreras_dia(ctx, 'Domingo')
@@ -216,6 +238,7 @@ async def mostrar_carreras_dia(ctx, dia):
     await ctx.send(embed=embed)
 
 @bot.command(name='proxima', aliases=['pc'])
+@solo_canal_comandos()
 async def proxima(ctx):
     """Muestra la próxima carrera"""
     ahora = datetime.now(CHILE_TZ)
@@ -258,6 +281,7 @@ async def proxima(ctx):
     await ctx.send("No hay carreras programadas próximamente con horario definido.")
 
 @bot.command(name='info')
+@solo_canal_comandos()
 async def info(ctx, *, nombre_torneo):
     """Muestra información detallada de un torneo específico"""
     torneo = None
@@ -467,6 +491,22 @@ async def canal_cumpleanos(ctx):
     guardar_datos(datos)
     await ctx.send(f"✅ Este canal recibirá notificaciones de cumpleaños 🎂")
 
+@bot.command(name='canal_comandos')
+@commands.has_permissions(administrator=True)
+async def canal_comandos(ctx):
+    """Configura este canal como el único donde funcionan los comandos de consulta"""
+    datos['canal_comandos'] = ctx.channel.id
+    guardar_datos(datos)
+    await ctx.send(f"✅ Los comandos de torneos solo funcionarán en este canal 🏎️\nPara desactivar la restricción, usa `!desactivar_restriccion`")
+
+@bot.command(name='desactivar_restriccion')
+@commands.has_permissions(administrator=True)
+async def desactivar_restriccion(ctx):
+    """Permite usar comandos de consulta en cualquier canal"""
+    datos['canal_comandos'] = None
+    guardar_datos(datos)
+    await ctx.send(f"✅ Los comandos de torneos ahora funcionan en cualquier canal")
+
 @bot.command(name='ver_canales')
 @commands.has_permissions(administrator=True)
 async def ver_canales(ctx):
@@ -499,6 +539,19 @@ async def ver_canales(ctx):
     embed.add_field(
         name="🎂 Cumpleaños",
         value=nombre_cumples,
+        inline=False
+    )
+    
+    # Canal de comandos
+    if datos.get('canal_comandos'):
+        canal_comandos = bot.get_channel(datos['canal_comandos'])
+        nombre_comandos = canal_comandos.mention if canal_comandos else "Canal no encontrado"
+    else:
+        nombre_comandos = "Sin restricción (funciona en todos)"
+    
+    embed.add_field(
+        name="🏎️ Canal de Comandos",
+        value=nombre_comandos,
         inline=False
     )
     
@@ -677,6 +730,8 @@ async def ayuda_bot(ctx):
         `!eliminar_torneo Nombre del Torneo`
         `!canal_recordatorios` - Activar recordatorios de carreras
         `!canal_cumpleaños` - Activar notificaciones de cumpleaños
+        `!canal_comandos` - Restringir comandos a un canal
+        `!desactivar_restriccion` - Permitir comandos en todos los canales
         `!ver_canales` - Ver canales configurados
         `!añadir_cumple Nombre | DD/MM` - Añadir cumpleaños
         `!eliminar_cumple Nombre` - Eliminar cumpleaños
@@ -692,10 +747,19 @@ async def ayuda_bot(ctx):
 @eliminar_torneo.error
 @canal_recordatorios.error
 @canal_cumpleanos.error
+@canal_comandos.error
+@desactivar_restriccion.error
 @ver_canales.error
 async def permisos_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         await ctx.send("❌ Solo los administradores pueden usar este comando")
+    elif isinstance(error, commands.CheckFailure):
+        if datos.get('canal_comandos'):
+            canal = bot.get_channel(datos['canal_comandos'])
+            if canal:
+                await ctx.send(f"❌ Este comando solo puede usarse en {canal.mention}")
+            else:
+                await ctx.send("❌ Este comando está restringido a un canal específico")
 
 # Ejecutar el bot con variable de entorno
 bot.run(os.getenv('DISCORD_TOKEN'))
